@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Main2Activity">
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/account"
+        android:title="go to profile page"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/contactpage"
+        android:title="Contact us"/>
+
+    <item
+        android:id="@+id/aboutPage"
+        android:title="About"/>
+    <item
+        android:id="@+id/shoppingCart"
+        android:icon="@drawable/shopping_cart"
+        android:title="Shopping Cart"
+        app:showAsAction="ifRoom"
+        />
+
+
+
+
+</menu>

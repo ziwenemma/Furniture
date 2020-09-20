@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShippingInformation"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="233dp"
+        app:srcCompat="@drawable/shipping" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_gravity="center"
+        android:hint="Name" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:hint="Address"
+        android:layout_gravity="center"/>
+
+    <Spinner
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:entries="@array/city_arrays"
+        android:prompt="@string/city_prompt" />
+
+    <EditText
+        android:id="@+id/zipCode"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:hint="zipCode"
+        android:inputType="textEmailAddress"
+        android:layout_gravity="center"/>
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_gravity="center"/>
+    <TextView
+        android:id="@+id/choose"
+        android:layout_width="300dp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:text="Choose a best delivery day"
+        android:layout_gravity="center"
+        />
+
+    <Spinner
+        android:id="@+id/setTime"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:entries="@array/time_arrays"
+        android:prompt="@string/time_prompt" />
+
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#76D7C4"
+        android:text="Confirm Order"
+        android:textColor="#1A5276"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>
