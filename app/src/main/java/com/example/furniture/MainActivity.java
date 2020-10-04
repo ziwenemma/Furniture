@@ -7,26 +7,13 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * The Main Activity for the Application
- * @author ziwenma
- * @version 1.0
- * This is the first screen the user sees
- */
+
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * Watch me document this code
-     */
 
-    /**
-     * Button for user to click
-     */
     Button btn;
-    /**
-     * Button for user to click
-     */
+
     Button LogIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,22 +38,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * opens the next activity
-     * @see Main2Activity
-     * @param view
-     */
     public void startMenuActivity(View view){
         Intent intent= new Intent(this,SignUpPage.class);
         startActivity(intent);
 
     }
 
-    /**
-     * opens the next activity
-     * @see LoginPage
-     * @param view
-     */
+
     public  void startNextActivity(View view){
         Intent Next = new Intent(this, LoginPage.class);
         startActivity(Next);

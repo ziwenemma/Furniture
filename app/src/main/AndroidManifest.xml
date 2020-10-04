@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutPage"></activity>
+        <activity android:name=".OrderHistory"></activity>
+        <activity android:name=".AboutPage" />
         <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".EditProfile" />
         <activity android:name=".ProfilePage" />
@@ -18,7 +19,6 @@
         <activity android:name=".Contact" />
         <activity android:name=".ShippingInformation" />
         <activity android:name=".Main2Activity" />
-        <activity android:name=".item_layout" />
         <activity android:name=".ShoppingCart" />
         <activity android:name=".SignUpPage" />
         <activity android:name=".LoginPage" />

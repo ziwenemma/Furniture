@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,21 +27,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-/**
- * @author ziwenma
- *
- * Payment page
-         */
+
 public class PaymentPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button btn;
     EditText customerName,cardNumber ,cardPin, cardExpiry;
     String name, number, pin, expiry;
     SharedPreferences sharedPreferences;
+    FirebaseAuth fAuth;
 
-    /**
-     * starting the activity
-     * @param savedInstanceState
-     */
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +47,8 @@ public class PaymentPage extends AppCompatActivity implements AdapterView.OnItem
         cardNumber = findViewById(R.id.card_number);
         cardPin = findViewById(R.id.pin);
         cardExpiry = findViewById(R.id.card_expiry);
+        fAuth = FirebaseAuth.getInstance();
+
 
         sharedPreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
         final String sId = sharedPreferences.getString("id", "");
@@ -92,13 +90,7 @@ public class PaymentPage extends AppCompatActivity implements AdapterView.OnItem
         btn = (Button) findViewById(R.id.confirm);
         btn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            /**
-             * getting the input for the payment
-             * customer name
-             * card number
-             * card Pin
-             * card Expiry
-             */
+
             @Override
             public void onClick(View v) {
 
@@ -128,10 +120,10 @@ public class PaymentPage extends AppCompatActivity implements AdapterView.OnItem
 
                 }
 
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("payment");
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 String Id = mDatabase.push().getKey();
                 Payment user = new Payment(Id, name, number, pin, expiry);
-                mDatabase.child(Objects.requireNonNull(Id)).setValue(user);
+                mDatabase.child("user payment").child(fAuth.getCurrentUser().getUid()).child(Objects.requireNonNull(Id)).setValue(user);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("id", Id);
@@ -144,9 +136,7 @@ public class PaymentPage extends AppCompatActivity implements AdapterView.OnItem
         });
     }
 
-    /**
-     * displaying the page
-     */
+
 
     public void startMenuActivity() {
         Intent intent = new Intent(this, ThanksPage.class);
@@ -154,11 +144,7 @@ public class PaymentPage extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    /**
-     * options menu
-     * @param menu
-     * @return
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity, menu);
@@ -185,10 +171,7 @@ public class PaymentPage extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    /**
-     * if no option selected
-     * @param arg0
-     */
+
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
@@ -199,18 +182,14 @@ public class PaymentPage extends AppCompatActivity implements AdapterView.OnItem
 
     }
     public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
         switch (view.getId()) {
             case R.id.radio_credit:
                 if (checked)
-                    // Pirates are the best
                     break;
             case R.id.radio_debit:
                 if (checked)
-                    // Ninjas rule
                     break;
         }
     }

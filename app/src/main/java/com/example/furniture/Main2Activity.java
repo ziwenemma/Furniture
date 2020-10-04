@@ -38,13 +38,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author
- * loading the products in the app
- * list of all the procducts displaying on the screen
- * storing data in the database
- */
+
 public class Main2Activity extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -63,12 +57,7 @@ public class Main2Activity extends AppCompatActivity {
     List<product> productList;
     private DatabaseReference mDatabaseLike;
 
-    /**
-     * creating the list and displaying message
-     * getting the database to show all the list
-     * displaying the likes.
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,33 +77,17 @@ public class Main2Activity extends AppCompatActivity {
         mDatabaseLike.keepSynced(true);
 
         editText.addTextChangedListener(new TextWatcher() {
-            /**
-             * before text changed state
-             * @param s
-             * @param start
-             * @param count
-             * @param after
-             */
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-            /**
-             *  on changed state
-             * @param s
-             * @param start
-             * @param before
-             * @param count
-             */
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
-            /**
-             * after the text has changed
-             * displaying string or empty string
-             * @param s
-             */
+
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().isEmpty()){
@@ -131,11 +104,7 @@ public class Main2Activity extends AppCompatActivity {
         fab= (FloatingActionButton)findViewById(R.id.fab_checkout);
 
         fab.setOnClickListener(new View.OnClickListener() {
-            /**
-             * displaying the message if shopping is completed by the user
-             *
-             * @param v
-             */
+
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(Main2Activity.this,ShoppingCart.class);
@@ -151,10 +120,7 @@ public class Main2Activity extends AppCompatActivity {
     private void search(String s) {
         Query query=mdatabasereference.orderByChild("name").startAt(s).endAt(s+"\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
-            /**
-             *
-             * @param
-             */
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChildren()){
@@ -178,10 +144,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
     }
-    /**
-     * on start of the page
-     * building the products at the backend and showing the list with products and accessories
-     */
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -196,15 +159,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<product, BlogViewHolder>(options) {
-            /**
-             * setting the name of the product
-             * setting the price
-             * creating the discription
-             * the like button
-             * @param blogViewHolder
-             * @param i
-             * @param product_get_set_v
-             */
+
             @Override
             protected void onBindViewHolder(@NonNull final BlogViewHolder blogViewHolder, final int i, @NonNull final product product_get_set_v) {
                 final String post_key = getRef(i).getKey();
@@ -212,21 +167,18 @@ public class Main2Activity extends AppCompatActivity {
                 blogViewHolder.setname(product_get_set_v.getName());
                 blogViewHolder.setPrice("$"+product_get_set_v.getPrice());
                 blogViewHolder.setDesc(product_get_set_v.getDesc());
+                blogViewHolder.setRate(product_get_set_v.getRate());
                 blogViewHolder.setLikeBtn(post_key);
+
 
                 String image_url = blogViewHolder.setimage(product_get_set_v.getImage());
 
                 blogViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    /**
-                     * listener for the product description, its data and the product id
-                     * @param v
-                     */
+
                     @Override
                     public void onClick(View v) {
                         final String productid = getRef(i).getKey();
                         Log.d("productid", " data : " + productid);
-                        //Toast.makeText(Main2Activity.this, post_key, Toast.LENGTH_LONG).show();
-
                         Intent singleItemIntent = new Intent(Main2Activity.this,ProductDetailsActivity.class);
                         singleItemIntent.putExtra("product_id",post_key);
                         startActivity(singleItemIntent);
@@ -236,10 +188,6 @@ public class Main2Activity extends AppCompatActivity {
 
                 blogViewHolder.mLikebtn.setOnClickListener(new View.OnClickListener() {
 
-                    /**
-                     * validating the like button
-                     * @param v
-                     */
                     @Override
                     public void onClick(View v) {
                         mProcessLike = true;
@@ -258,10 +206,7 @@ public class Main2Activity extends AppCompatActivity {
                                     }
                                 }
                             }
-                            /**
-                             * in case if want to cancel.
-                             * @param error
-                             */
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -272,13 +217,7 @@ public class Main2Activity extends AppCompatActivity {
                 });
             }
 
-            /**
-             * layout for the app page
-             * basically the blog
-             * @param parent
-             * @param viewType
-             * @return
-             */
+
             @NonNull
             @Override
             public BlogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -300,12 +239,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-    /**
-     * displaying
-     * image button
-     * name of the product
-     * and the like button
-     */
+
     public static class BlogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
@@ -332,11 +266,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
         }
-        /**
-         * validating the like button when its state changes.
-         * setting the color for the button
-         * @param post_key
-         */
+
         public void setLikeBtn(final String post_key){
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -348,10 +278,7 @@ public class Main2Activity extends AppCompatActivity {
 
                    }
                 }
-                /**
-                 * if there is an error
-                 * @param error
-                 */
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -359,10 +286,6 @@ public class Main2Activity extends AppCompatActivity {
             });
 
         }
-        /**
-         * dispying the name
-         * @param name
-         */
 
         public void setname(String name)
         {
@@ -370,31 +293,28 @@ public class Main2Activity extends AppCompatActivity {
             ename.setText(name);
 
         }
-        /**
-         * displaying the price
-         * @param price
-         */
+
         public void setPrice(String price)
         {
             TextView eprice=(TextView)mView.findViewById(R.id.text2);
             eprice.setText(price);
 
         }
-        /**
-         * displaying the description
-         * @param desc
-         */
+
         public void setDesc(String desc)
         {
             TextView edesc=(TextView)mView.findViewById(R.id.text3);
             edesc.setText(desc);
 
         }
-        /**
-         * actually loading the picture on the app
-         * @param url
-         * @return  the picture of the product
-         */
+
+        public void setRate(String rate)
+        {
+            TextView erate=(TextView)mView.findViewById(R.id.textViewRating);
+            erate.setText(rate);
+
+        }
+
         public String setimage(String url)
         {
             ImageView image = (ImageView)mView.findViewById(R.id.productimage);
@@ -409,19 +329,12 @@ public class Main2Activity extends AppCompatActivity {
     }
 
 
-    /**
-     * To click to the shoppingCart activity
-     *
-     */
+
     public void onCreateDialog() {
         Intent intent5 = new Intent(this, ShoppingCart.class);
         startActivity(intent5);
     }
-    /**
-     * inflate the menu
-     * @param menu
-     * @return
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity, menu);
@@ -429,11 +342,7 @@ public class Main2Activity extends AppCompatActivity {
 
     }
 
-    /**
-     * this method gets called when user select an option from the menu
-     * @param item a MenuItem Selected
-     * @return the selected Item
-     */
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -445,6 +354,10 @@ public class Main2Activity extends AppCompatActivity {
         }
         else if (id == R.id.contactpage) {
             Intent myintent = new Intent(Main2Activity.this, Contact.class);
+            startActivity(myintent);
+        }
+        else if (id == R.id.ordermenu) {
+            Intent myintent = new Intent(Main2Activity.this, OrderHistory.class);
             startActivity(myintent);
         }
         else if (id == R.id.aboutPage) {

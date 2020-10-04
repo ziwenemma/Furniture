@@ -25,10 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * sign up page
- * includes username, email, password, phone, signup button, login button
- */
 public class SignUpPage extends AppCompatActivity {
 
     EditText username, mEmail, mPassword, mPhone;
@@ -38,10 +34,7 @@ public class SignUpPage extends AppCompatActivity {
     public static final String TAG = "TAG";
     FirebaseFirestore fStore;
     String userID;
-    /**
-     * iniatiating the creation of form
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +55,7 @@ public class SignUpPage extends AppCompatActivity {
         }
 
         signupButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * listener for the input validation
-             * @param v
-             */
+
             @Override
             public void onClick(View v) {
                 final String email = mEmail.getText().toString().trim();
@@ -90,30 +80,20 @@ public class SignUpPage extends AppCompatActivity {
                 }
 
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    /**
-                     * checking the validation of the form
-                     * displaying the message
-                     * @param task
-                     */
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(SignUpPage.this, "User Created", Toast.LENGTH_LONG).show();
                             FirebaseUser fuser = fAuth.getCurrentUser();
                             fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                /**
-                                 * sending the email for authentication if success
-                                 * @param aVoid
-                                 */
+
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(SignUpPage.this, "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
-                                /**
-                                 * sending the email for authentication if failure
-                                 * @param e
-                                 */
+
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
@@ -127,10 +107,7 @@ public class SignUpPage extends AppCompatActivity {
                             user.put("email", email);
                             user.put("phone", phone);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                /**
-                                 * validating if the profile has been created
-                                 * @param aVoid
-                                 */
+
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "onSuccess: user Profile is created for " + userID);
@@ -154,10 +131,6 @@ public class SignUpPage extends AppCompatActivity {
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * listener for the login button
-             * @param v
-             */
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), LoginPage.class));

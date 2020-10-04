@@ -1,10 +1,6 @@
 package com.example.furniture;
 
-/**
- * Contact information for the user who have question
- * getting the information
- * id, question, email
- */
+
 public class retrieve {
 
     public retrieve() {

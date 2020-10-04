@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,45 +28,47 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-/**
- *
- * shipping information for the app
- * adding the listener
- * displaying the list of the countries
- */
+
 public class ShippingInformation extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button btn;
 
     String[] cities = {"Montreal","Laval","Quebec"};
+    String[] times={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     EditText etName, etPhone, etAddress, etEmail,etCity,etZipeCode,etTime;
     String name, phone, address, email, city,zipcode,time;
     Spinner spino;
+    Spinner sp2;
     SharedPreferences sharedPreferences;
+    FirebaseAuth fAuth;
+
+
 
     String totalAmount
             ="";
-    /**
-     * adding the button and crearing the state
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipping_information);
+        fAuth = FirebaseAuth.getInstance();
+
 
         totalAmount=getIntent().getStringExtra("Total Price");
         Toast.makeText(this,"Total Price =$"+totalAmount,Toast.LENGTH_LONG).show();
 
         spino = findViewById(R.id.city);
         spino.setOnItemSelectedListener(this);
-        spino = findViewById(R.id.setTime);
-        spino.setOnItemSelectedListener(this);
+        sp2 = findViewById(R.id.setTime);
+        sp2.setOnItemSelectedListener(this);
 
         etName = findViewById(R.id.name);
         etPhone = findViewById(R.id.phone);
         etAddress = findViewById(R.id.address);
         etEmail = findViewById(R.id.email);
         etZipeCode = findViewById(R.id.zipCode);
+        fAuth = FirebaseAuth.getInstance();
+
+
 
 
         sharedPreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
@@ -73,11 +76,7 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
         if (!TextUtils.isEmpty(sId)) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("shippings");
 
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                /**
-                 *
-                 * @param snapshot
-                 */
+            databaseReference.child("user shippment").child(fAuth.getCurrentUser().getUid()).child("shippment").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
 
@@ -101,10 +100,7 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
 
                 }
 
-                /**
-                 * error(on cancelation)
-                 * @param databaseError
-                 */
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
@@ -118,6 +114,7 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
         btn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 
+
             @Override
             public void onClick(View v) {
 
@@ -126,13 +123,13 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
                 address = etAddress.getText().toString();
                 email = etEmail.getText().toString();
                 city = spino.getSelectedItem().toString();
-                time=spino.getSelectedItem().toString();
+                time=sp2.getSelectedItem().toString();
+
 
                 if (TextUtils.isEmpty(name)) {
                     etName.setError("This field is empty!");
                     return;
                 }
-                // blan space is for error messages
                 if (TextUtils.isEmpty(email)) {
                     etEmail.setError("This field is empty!");
                     return;
@@ -143,11 +140,11 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
 
                 }
 
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("shippings");
-                String Id = mDatabase.push().getKey();
-                Shipping user = new Shipping(Id, name, email, phone, address, city,zipcode,time);
-                mDatabase.child(Objects.requireNonNull(Id)).setValue(user);
+                DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference("shippment");
 
+                 String Id = mDatabase.push().getKey();
+                Shipping user = new Shipping(Id, name, email, phone, address, city,zipcode,time);
+                mDatabase.child("user shippment").child(fAuth.getCurrentUser().getUid()).child(Objects.requireNonNull(Id)).setValue(user);;
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("id", Id);
                 editor.apply();
@@ -155,6 +152,12 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
                 Toast.makeText(ShippingInformation.this, "Shipping Information Saved Successfully!", Toast.LENGTH_LONG).show();
 
                 startMenuActivity();
+            }
+
+            private void addingToShipList() {
+
+
+
             }
         });
 
@@ -169,6 +172,16 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
                         .simple_spinner_dropdown_item);
         spino.setAdapter(ad);
 
+        ArrayAdapter at
+                = new ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                times);
+        at.setDropDownViewResource(
+                android.R.layout
+                        .simple_spinner_dropdown_item);
+        sp2.setAdapter(at);
+
 
     }
 
@@ -178,22 +191,14 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
 
     }
 
-    /**
-     * creating the menu option
-     * @param menu
-     * @return
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity, menu);
         return true;
     }
 
-    /**
-     * if an item is selected
-     * @param item
-     * @return the option selected(display)
-     */
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -205,13 +210,7 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * displaying the info the selected item holds
-     * @param arg0
-     * @param arg1
-     * @param position
-     * @param id
-     */
+
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1,
                                int position,
@@ -219,10 +218,7 @@ public class ShippingInformation extends AppCompatActivity implements AdapterVie
 
 
     }
-    /**
-     * if no item is selected
-     * @param arg0
-     */
+
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 

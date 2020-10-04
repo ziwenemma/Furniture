@@ -23,11 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- *
- * shopping cart
- */
 public class ShoppingCart extends AppCompatActivity {
     Button btn;
 
@@ -39,16 +36,14 @@ public class ShoppingCart extends AppCompatActivity {
 
     private float overTotalPrice=0;
 
-    /**
-     * creating the button
-     * saving the state
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
         fAuth = FirebaseAuth.getInstance();
+
+
         btn=(Button)findViewById(R.id.go_shippmentback);
         recyclerView = findViewById(R.id.cart_list_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -58,10 +53,7 @@ public class ShoppingCart extends AppCompatActivity {
         totalAmount = (TextView) findViewById(R.id.total_price);
 
         NextProcessBtn.setOnClickListener(new View.OnClickListener() {
-            /**
-             * listener for the above button
-             * @param v
-             */
+
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ShoppingCart.this,ShippingInformation.class);
@@ -73,9 +65,7 @@ public class ShoppingCart extends AppCompatActivity {
         });
 
         btn.setOnClickListener(new View.OnClickListener() {
-            /**
-             * starting the activity if selected
-             */
+
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ShoppingCart.this,Main2Activity.class);
@@ -85,10 +75,7 @@ public class ShoppingCart extends AppCompatActivity {
 
     }
 
-    /**
-     * when activity starts
-     * cart list
-     */
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -101,14 +88,10 @@ public class ShoppingCart extends AppCompatActivity {
                         .child(fAuth.getCurrentUser().getUid()).child("product"),Cart.class).build();
 
 
+
         FirebaseRecyclerAdapter<Cart,CartViewHolder>adapter
                 =new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
-            /**
-             * product details likewhich item, quantity and price
-             * @param cartViewHolder
-             * @param i
-             * @param cart
-             */
+
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder cartViewHolder, int i, @NonNull final Cart cart) {
 
@@ -123,10 +106,7 @@ public class ShoppingCart extends AppCompatActivity {
 
 
                 cartViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    /**
-                     * option to remove and edit
-                     * @param v
-                     */
+
                     @Override
                     public void onClick(View v) {
                         CharSequence options[]=new CharSequence[]{
@@ -137,11 +117,7 @@ public class ShoppingCart extends AppCompatActivity {
                         builder.setTitle("Cart Options:");
 
                         builder.setItems(options, new DialogInterface.OnClickListener() {
-                            /**
-                             * listener and dialog box
-                             * @param dialog
-                             * @param which
-                             */
+
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -154,10 +130,7 @@ public class ShoppingCart extends AppCompatActivity {
                                     cartListRef.child("user view").child(fAuth.getCurrentUser().getUid()).child("product")
                                             .child(cart.getProduct_id()).removeValue()
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                /**
-                                                 * checking if valid
-                                                 * @param task
-                                                 */
+
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
 

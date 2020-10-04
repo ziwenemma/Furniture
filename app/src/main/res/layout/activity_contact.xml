@@ -81,8 +81,9 @@
         android:id="@+id/email_app"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="also can send email to:230u02@gmail.com"
-        android:textSize="15sp" />
+        android:text="also can send email to:emma@gmail.com"
+        android:textSize="15sp"
+        android:gravity="center"/>
 
 
 

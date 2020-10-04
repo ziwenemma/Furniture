@@ -15,50 +15,31 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Contains the list of items displayed
- * product list
- */
+
 
 public class Adapter extends RecyclerView.Adapter<Adapter.AdapterViewHolder> {
     public Context c;
     public ArrayList<product> arrayList;
     int num = 0;
 
- /**
-     *
-     * @param c context
-     * @param arrayList is Array list as explained above
-     */
+
     public Adapter(Context c, ArrayList<product> arrayList) {
         this.c = c;
         this.arrayList = arrayList;
 
     }
-      /**
-     *
-     * @return  number of items
-     */
+
     @Override
     public int getItemCount() {
         return arrayList.size();
     }
-     /**
-     *
-     * @param position selected item
-     * @return position
-     */
+
 
     @Override
     public long getItemId(int position) {
         return position;
     }
-    /**
-     *
-     * @param parent
-     * @param viewType
-     * @return view group
-     */
+
 
     @NonNull
     @Override
@@ -75,6 +56,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.AdapterViewHolder> {
         holder.t1.setText(product.getName());
         holder.t2.setText(product.getPrice());
         holder.t3.setText(product.getDesc());
+        holder.t4.setText(product.getRate());
         Picasso.get().load(product.getImage()).into(holder.i1);
     }
      
@@ -87,6 +69,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.AdapterViewHolder> {
         public TextView t1;
         public TextView t2;
         public TextView t3;
+        public  TextView t4;
         public ImageView i1;
         Button button;
 
@@ -96,6 +79,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.AdapterViewHolder> {
             t1 = (TextView) itemView.findViewById(R.id.text1);
             t2 = (TextView) itemView.findViewById(R.id.text2);
             t3 = (TextView) itemView.findViewById(R.id.text3);
+            t4=(TextView)itemView.findViewById(R.id.textViewRating);
             i1 = (ImageView) itemView.findViewById(R.id.productimage);
 
 

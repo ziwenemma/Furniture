@@ -32,10 +32,7 @@ import com.squareup.picasso.Picasso;
 
 import javax.annotation.Nullable;
 
-/**
- * @author  armaan
- * profile page
- */
+
 
 public class ProfilePage extends AppCompatActivity {
     private static final int GALLERY_INTENT_CODE = 1023 ;
@@ -49,13 +46,7 @@ public class ProfilePage extends AppCompatActivity {
     ImageView profileImage;
     StorageReference storageReference;
 
-    /**
-     * creating the page
-     * validating the database
-     * creating the profile
-     * putting the profile pic
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -238,10 +229,7 @@ public class ProfilePage extends AppCompatActivity {
 
 
     }
-    /**
-     * if user wants to logout
-     * @param view
-     */
+
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();//logout
         startActivity(new Intent(getApplicationContext(),LoginPage.class));

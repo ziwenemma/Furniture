@@ -31,12 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * editing the profile
- * firebase
- * signing options input
- */
+
 
 public class EditProfile extends AppCompatActivity {
 
@@ -48,10 +43,7 @@ public class EditProfile extends AppCompatActivity {
     FirebaseFirestore fStore;
     FirebaseUser user;
     StorageReference storageReference;
-      /**
-     * saved state to firebase
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +74,7 @@ public class EditProfile extends AppCompatActivity {
         });
 
         profileImageView.setOnClickListener(new View.OnClickListener() {
-              /**
-             * gallery picture for the firebase storage
-             * @param v
-             */
+
             @Override
             public void onClick(View v) {
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -94,10 +83,7 @@ public class EditProfile extends AppCompatActivity {
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
-            /**
-             * if else statement for if profile is empty field.
-             * show message.
-             */
+
             @Override
             public void onClick(View v) {
                 if(profileFullName.getText().toString().isEmpty() || profileEmail.getText().toString().isEmpty() || profilePhone.getText().toString().isEmpty()){
@@ -107,10 +93,7 @@ public class EditProfile extends AppCompatActivity {
 
                 final String email = profileEmail.getText().toString();
                 user.updateEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    /**
-                    *updating email,fname, phone
-                    *adding listener
-                    */
+
                     @Override
                     public void onSuccess(Void aVoid) {
                         DocumentReference docRef = fStore.collection("users").document(user.getUid());
@@ -129,9 +112,7 @@ public class EditProfile extends AppCompatActivity {
                         Toast.makeText(EditProfile.this, "Email is changed.", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    /**
-                    * evaluating failure
-                    */
+
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(EditProfile.this,   e.getMessage(), Toast.LENGTH_SHORT).show();

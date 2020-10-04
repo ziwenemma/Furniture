@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,11 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-/**
- * @author ziwenma
- *
- * Contact page for user to submit questions
- */
 
 public class Contact extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button btn;
@@ -38,12 +34,10 @@ public class Contact extends AppCompatActivity implements AdapterView.OnItemSele
     EditText question, email;
     String userquestion, useremail;
     SharedPreferences sharedPreferences;
+    FirebaseAuth fAuth;
 
-    /**
-     * starting activity
-     *
-     * @param savedInstanceState
-     */
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +48,8 @@ public class Contact extends AppCompatActivity implements AdapterView.OnItemSele
         question = findViewById(R.id.question);
         email = findViewById(R.id.email);
         button=findViewById(R.id.gobrowser);
+        fAuth = FirebaseAuth.getInstance();
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,12 +97,7 @@ public class Contact extends AppCompatActivity implements AdapterView.OnItemSele
         btn = (Button) findViewById(R.id.submit);
         btn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            /**
-             * getting the input for the contact
-             * user Id
-             * question
-             * email account
-             */
+
             @Override
             public void onClick(View v) {
 
@@ -125,10 +116,10 @@ public class Contact extends AppCompatActivity implements AdapterView.OnItemSele
                 }
 
 
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Contact Question");
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 String Id = mDatabase.push().getKey();
                 retrieve user = new retrieve(Id, useremail, userquestion);
-                mDatabase.child(Objects.requireNonNull(Id)).setValue(user);
+                mDatabase.child("user questions").child(fAuth.getCurrentUser().getUid()).child(Objects.requireNonNull(Id)).setValue(user);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("id", Id);
@@ -141,19 +132,13 @@ public class Contact extends AppCompatActivity implements AdapterView.OnItemSele
         });
     }
 
-    /**
-     * if no option selected
-     *
-     * @param arg0
-     */
+
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
     }
 
-    /**
-     * displaying the next page
-     */
+
 
     public void startMenuActivity() {
         Intent intent = new Intent(this, ThanksPage.class);
@@ -161,12 +146,7 @@ public class Contact extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    /**
-     * options menu
-     *
-     * @param menu
-     * @return
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity, menu);

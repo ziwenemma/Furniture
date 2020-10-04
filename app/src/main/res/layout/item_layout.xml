@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/productimage"
-                android:layout_width="150dp"
-                android:layout_height="120dp"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
                 android:padding="4dp" />
 
 
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:layout_toRightOf="@id/productimage"
                 android:text="Sofa"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
@@ -39,6 +39,7 @@
 
             <TextView
                 android:id="@+id/text3"
+                android:textSize="10sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text1"
@@ -59,7 +60,8 @@
             android:layout_toRightOf="@id/productimage"
             android:text="$700"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/textViewRating"
@@ -72,7 +74,6 @@
                 android:background="@color/colorPrimary"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:text="4.7"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
                 android:textStyle="bold" />
 
@@ -95,9 +96,11 @@
                 android:id="@+id/likebtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/productimage"
-                app:srcCompat="@drawable/w"
-                android:layout_marginTop="8dp"/>
+                android:layout_below="@+id/text2"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="-12dp"
+                android:layout_toRightOf="@id/text2"
+                app:srcCompat="@drawable/w" />
 
         </RelativeLayout>
 

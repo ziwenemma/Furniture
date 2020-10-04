@@ -10,8 +10,13 @@
         android:id="@+id/credit"
         android:layout_width="match_parent"
         android:layout_height="233dp"
-        app:srcCompat="@drawable/creditcards"
+        app:srcCompat="@drawable/payment"
         />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -35,7 +40,7 @@
         android:id="@+id/customer_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Customer Name" />
+        android:hint="Host Name" />
 
     <EditText
         android:id="@+id/card_number"
@@ -47,7 +52,7 @@
         android:id="@+id/pin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Card Pin" />
+        android:hint="Security Code" />
 
     <EditText
         android:id="@+id/card_expiry"
@@ -55,11 +60,7 @@
         android:layout_height="wrap_content"
         android:hint="Card Expiry" />
 
-  
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="41dp" />
 
     <Button
         android:id="@+id/confirm"

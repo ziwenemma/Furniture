@@ -1,10 +1,5 @@
 package com.example.furniture;
 
-/**
- * shipping information for the product
- * getting the information
- * id, name, email, phone, address, country
- */
 public class Shipping {
 
     public Shipping() {

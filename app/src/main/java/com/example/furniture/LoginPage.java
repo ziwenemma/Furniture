@@ -21,13 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- *
- * @author armaan
- * login page parent app-AppCompatActivity
- * contains email, password, login button, signup button
- * and if password is forgotten
- */
+
 
 public class LoginPage extends AppCompatActivity {
     EditText mEmail, mPassword;
@@ -36,10 +30,6 @@ public class LoginPage extends AppCompatActivity {
     FirebaseAuth fAuth;
     TextView forgotTextLink;
 
-    /**
-     * creating the form and finding its state
-     * @param savedInstanceState
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +116,6 @@ public class LoginPage extends AppCompatActivity {
                      */
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //extract the email and send reset link
 
                         String mail=resetMail.getText().toString();
                         fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -139,9 +128,7 @@ public class LoginPage extends AppCompatActivity {
                                 Toast.makeText(LoginPage.this,"Reset Link Sent To Your Email", Toast.LENGTH_LONG).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
-                            /**
-                             * if not able to send the link then this message is shown.
-                             */
+
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(LoginPage.this,"Error ! Reset Link is Not Sent"+e.getMessage(), Toast.LENGTH_LONG).show();
@@ -159,7 +146,6 @@ public class LoginPage extends AppCompatActivity {
                      */
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //close the dialog
                     }
                 });
 
